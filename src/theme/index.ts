@@ -22,5 +22,17 @@ export default {
             "600": "#EFF0F0",
             "700": "#FAFAFA",
         },
+    },
+    fontSize: {
+        "xs": "12px",
+        "sm": "14px",
+        "md": "16px",
+        "lg": "18px",
+        "xl": "24px",
+        "2xl": "32px",
+    },
+    fontFamily: {
+        regular: "NunitoSans_400Regular",
+        bold: "NunitoSans_700Bold",
     }
 }
