@@ -1,5 +1,8 @@
 export default {
     colors: {
+        transparent: "transparent",
+        white: "#FFF",
+        black: "#000",
         red:{
             dark: "#BF3B44",
             mid: "#F3BABD",
@@ -18,6 +21,6 @@ export default {
             "500": "#DDDEDF",
             "600": "#EFF0F0",
             "700": "#FAFAFA",
-        }
+        },
     }
 }
