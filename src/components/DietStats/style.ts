@@ -1,9 +1,14 @@
-import styled from "styled-components/native";
+import { TouchableOpacityProps } from "react-native";
+import styled, {css} from "styled-components/native";
 
-export const Conteiner = styled.TouchableOpacity`
+interface Props extends TouchableOpacityProps {
+    expand?: boolean 
+}
+
+export const Conteiner = styled.TouchableOpacity<Props>`
     align-items: center;
     justify-content: center;
-    height: 102px;
+    height: ${({expand}) => expand ? "150px" : "100px"};
     width: 100%;
     padding: 10px 10px;
     border-radius: 8px;
@@ -12,13 +17,20 @@ export const Conteiner = styled.TouchableOpacity`
     background-color: ${({theme}) => theme.colors.green.light};
 `;
 
-export const Icon = styled.TouchableOpacity`
+const Icon = styled.TouchableOpacity`
     width: 24px;
     height: 24px;
     padding: 4px;
     position: absolute;
     top: 16px;
+`;
+
+export const IconRight = styled(Icon)`
     right: 16px;
+`;
+
+export const IconLeft = styled(Icon)`
+    left: 16px;
 `;
 
 export const Title = styled.Text`

@@ -5,7 +5,6 @@ import { MealListItem } from "@components/MealListItem";
 import { SectionList } from "react-native";
 import { DietStats } from "@components/DietStats";
 
-
 export function Home () {
 
     const DATA = [
