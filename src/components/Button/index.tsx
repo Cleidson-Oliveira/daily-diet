@@ -1,15 +1,15 @@
-import { Plus } from 'phosphor-react-native';
+import { ReactNode } from 'react';
 import { Conteiner, Title } from "./style";
 
 interface Props {
     buttonTitle: string,
-    icon?: string,
+    children?: ReactNode
 }
 
-export function Button ({ icon, buttonTitle }: Props) {
+export function Button ({ buttonTitle, children = "" }: Props) {
     return (
         <Conteiner>
-            <Plus color="white" size={18}/>
+            { children }
             <Title>
                 {buttonTitle}
             </Title>
