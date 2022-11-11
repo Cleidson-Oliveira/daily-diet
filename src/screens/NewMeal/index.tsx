@@ -1,10 +1,13 @@
+import { useTheme } from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
+
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
 import { Select } from "@components/Select";
-import { ArrowLeft } from "phosphor-react-native";
-import { useTheme } from "styled-components/native";
+
+import { ArrowLeft, Plus } from 'phosphor-react-native';
+
 import { Conteiner, Content, DateTime, Header, Icon, Separator, Title } from "./style";
-import { Plus } from 'phosphor-react-native';
 
 interface NewMealProps {}
 
@@ -12,10 +15,16 @@ export function NewMeal (props: NewMealProps) {
 
     const { colors } = useTheme()
 
+    const navigation = useNavigation();
+
+    const handleBack = () => {
+        navigation.navigate("home")
+    }
+
     return (
         <Conteiner>
             <Header>
-                <Icon>
+                <Icon onPress={handleBack}>
                     <ArrowLeft color={colors.gray[100]} size={20}/>
                 </Icon>
                 <Title>Nova refeição</Title>

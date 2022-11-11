@@ -1,13 +1,26 @@
-import { DietStats } from "@components/DietStats";
-import { Card, CardSubtitle, CardTitle, Conteiner, Content, Title } from "./style";
+import { useNavigation } from "@react-navigation/native";
+import { ArrowLeft } from "phosphor-react-native";
+import { Card, CardSubtitle, CardTitle, Conteiner, Content, Header, HeaderSubtitle, HeaderTitle, Icon, Title } from "./style";
 
 interface StatsProps {}
 
 export function Stats (props: StatsProps) {
 
+    const navigation = useNavigation();
+
+    const handleGoBack = () => {
+      navigation.navigate("home");
+    }
+
     return (
         <Conteiner>
-            <DietStats expand/>
+            <Header>
+                <Icon onPress={() => handleGoBack()}>
+                    <ArrowLeft color="green" size={24}/>
+                </Icon>
+                <HeaderTitle>90,86%</HeaderTitle>
+                <HeaderSubtitle>das refeições dentro da dieta</HeaderSubtitle>
+            </Header>
             <Content>
                 <Title>Estatísticas gerais</Title>
                 <Card color="gray">

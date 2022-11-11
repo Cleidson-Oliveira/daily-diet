@@ -1,3 +1,4 @@
+import { TouchableOpacityProps } from "react-native";
 import { Conteiner, MealHour, MealName, Separator, Status } from "./style";
 
 interface Data {
@@ -6,14 +7,14 @@ interface Data {
     inDiet: boolean
 }
 
-interface Props {
+interface Props extends TouchableOpacityProps {
     data: Data
 }
 
-export function MealListItem ({ data }: Props) {
+export function MealListItem ({ data, ...rest}: Props) {
 
     return (
-        <Conteiner>
+        <Conteiner {...rest}>
             <MealHour>{data.hour}</MealHour>
             <Separator />
             <MealName>{data.meal}</MealName>

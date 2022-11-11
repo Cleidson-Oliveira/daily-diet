@@ -1,9 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
+
 import { Header } from "@components/Header";
 import { Button } from "@components/Button";
-import { BodyText, Conteiner, Content, MealListTitle, NewMeal } from "./style";
 import { MealListItem } from "@components/MealListItem";
 import { SectionList } from "react-native";
 import { DietStats } from "@components/DietStats";
+
+import { Plus } from "phosphor-react-native";
+
+import { BodyText, Conteiner, Content, MealListTitle, NewMeal } from "./style";
 
 export function Home () {
 
@@ -41,6 +46,11 @@ export function Home () {
         }
     ];
 
+    const navigation = useNavigation();
+
+    const handleGoNewMeal = () => {
+      navigation.navigate("newmeal");
+    }
 
     return (
       <Conteiner>
@@ -49,13 +59,18 @@ export function Home () {
         <Content>
           <NewMeal>
             <BodyText>Refeições</BodyText>
-            <Button buttonTitle="Nova Refeição"/>
+            <Button 
+              buttonTitle="Nova Refeição"
+              onPress={handleGoNewMeal}
+            >
+              <Plus color="white" size={18}/>
+            </Button>
           </NewMeal>
 
           <SectionList
             sections={DATA}
             showsVerticalScrollIndicator={false}
-            keyExtractor={(item, index) => item.meal + item.hour}
+            keyExtractor={(item) => item.meal + item.hour}
             renderItem={({item}) => <MealListItem data={item} />}
             renderSectionHeader={({ section: { title } }) => <MealListTitle>{title}</MealListTitle>}
           />

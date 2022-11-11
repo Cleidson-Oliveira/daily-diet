@@ -10,6 +10,45 @@ export const Conteiner = styled(SafeAreaView)`
     background-color: ${({theme}) => theme.colors.green.light};
 `;
 
+export const Header = styled(SafeAreaView)`
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    width: 100%;
+    padding: 10px 10px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    position: relative;
+    background-color: ${({theme}) => theme.colors.green.light};
+`;
+
+export const HeaderTitle = styled.Text`
+    width: 100%;
+    text-align: center;
+    color: ${({theme}) => theme.colors.gray[100]};
+    font-size: ${({theme}) => theme.fontSize["2xl"]};
+    font-family: ${({theme}) => theme.fontFamily.bold};
+`;
+
+export const HeaderSubtitle = styled.Text`
+    width: 100%;
+    text-align: center;
+    color: ${({theme}) => theme.colors.gray[200]};
+    font-size: ${({theme}) => theme.fontSize["sm"]};
+    font-family: ${({theme}) => theme.fontFamily.regular};
+`;
+
+export const Icon = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+`;
+
 export const Content = styled.View`
     flex: 1;
     border-top-left-radius: 20px;

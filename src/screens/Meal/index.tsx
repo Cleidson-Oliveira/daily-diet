@@ -3,7 +3,6 @@ import { ArrowLeft } from "phosphor-react-native";
 import { useTheme } from "styled-components/native";
 import { Conteiner, Content, Header, Icon, Separator, StatsIndicator, SubTitle, Tag, TagTitle, TextDescription, Title } from "./style";
 import { PencilSimple, Trash } from 'phosphor-react-native';
-import { View } from "react-native";
 
 export function Meal () {
 
@@ -30,14 +29,12 @@ export function Meal () {
                 </Tag>
 
                 <Separator />
-                <View>
                     <Button buttonTitle="Cadastrar Refeição">
                         <PencilSimple color="white" size={18} />
                     </Button>
                     <Button buttonTitle="Cadastrar Refeição" secondary>
                         <Trash color={colors.gray[100]} size={18} />
                     </Button>
-                </View>
             </Content>
         </Conteiner>
     )

@@ -1,9 +1,16 @@
 import { Button } from "@components/Button";
+import { useNavigation } from "@react-navigation/native";
 import { Conteiner, FeedBackImage, SubTitle, Title } from "./style";
 
 type TFeedback = "positive" | "negative";
 
 export function Feedback () {
+
+    const navigation = useNavigation();
+
+    const handleGoBack = () => {
+        navigation.navigate("home")
+    }
 
     const content = {
         "positive": {
@@ -30,7 +37,7 @@ export function Feedback () {
                 ? <FeedBackImage source={require("@assets/feedback-positive.png")}/>
                 : <FeedBackImage source={require("@assets/feedback-negative.png")}/>
             }
-            <Button buttonTitle="Ir para a página inicial"/>
+            <Button buttonTitle="Ir para a página inicial" onPress={handleGoBack}/>
         </Conteiner>
     )
 }
