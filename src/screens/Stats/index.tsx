@@ -26,9 +26,7 @@ export function Stats (props: StatsProps) {
                     <CardTitle>10</CardTitle>
                     <CardSubtitle>Refeições fora da dieta</CardSubtitle>
                 </Card>
-
             </Content>
-
         </Conteiner>
     )
 }

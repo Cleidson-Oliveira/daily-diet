@@ -13,7 +13,7 @@ export const Conteiner = styled(SafeAreaView)`
 export const Content = styled.View`
     flex: 1;
     border-top-left-radius: 20px;
-    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     padding: 24px;
     background-color: ${({theme}) => theme.colors.gray[700]};
 `;
