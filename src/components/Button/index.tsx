@@ -3,14 +3,15 @@ import { Conteiner, Title } from "./style";
 
 interface Props {
     buttonTitle: string,
+    secondary?: boolean,
     children?: ReactNode
 }
 
-export function Button ({ buttonTitle, children = "" }: Props) {
+export function Button ({ buttonTitle, secondary = false, children = "" }: Props) {
     return (
-        <Conteiner>
+        <Conteiner secondary={secondary}>
             { children }
-            <Title>
+            <Title secondary={secondary}>
                 {buttonTitle}
             </Title>
         </Conteiner>
