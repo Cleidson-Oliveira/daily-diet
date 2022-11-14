@@ -72,13 +72,15 @@ export function Home () {
       .catch(err => console.log(err))
     },[]))
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
       if (mealData.length > 0) {
         const percentageOfMealsInTheDiet = computeMealsPercentageInDiet()
 
         setPercentageOfMealsInTheDiet(+percentageOfMealsInTheDiet)
+      } else {
+        setPercentageOfMealsInTheDiet(0)
       }
-    }, [mealData])
+    }, [mealData]))
 
     return (
       <Conteiner>

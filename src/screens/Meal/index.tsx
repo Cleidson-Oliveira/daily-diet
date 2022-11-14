@@ -25,6 +25,10 @@ export function Meal () {
     const handleBack = () => {
         navigation.navigate("home");
     }
+
+    const handleEditMeal = () => {
+        navigation.navigate("editmeal", { id });
+    }
   
     const HandleDelete = async () => {
         await deleteById(id);
@@ -58,7 +62,10 @@ export function Meal () {
                 </Tag>
 
                 <Separator />
-                    <Button buttonTitle="Editar Refeição">
+                    <Button
+                        onPress={handleEditMeal}
+                        buttonTitle="Editar Refeição"
+                    >
                         <PencilSimple color="white" size={18} />
                     </Button>
                     <Button 

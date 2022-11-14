@@ -10,6 +10,9 @@ export declare global {
             meal: {
                 id: string;
             }
+            editmeal: {
+                id: string;
+            }
         }
     }
 }
