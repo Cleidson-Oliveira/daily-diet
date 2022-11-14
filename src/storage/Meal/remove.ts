@@ -1,20 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from "react-native-uuid"
 import { getAllMeals } from './getAll';
 import { IMeal } from "../MealDTO"
 
 const STORAGE_KEY = "@Daily-Diet:Meal";
 
-export async function createMeal (data: IMeal) {
+export async function deleteById (id: string) {
     try {
-        const newMeal = {
-            ...data,
-            id: uuid.v4() as string
-        }
-        
-        const storageMeal = await getAllMeals();
 
-        const mealData: IMeal[] = storageMeal ? [ ...storageMeal, newMeal ] : [];
+        const storageMeal = await getAllMeals() as IMeal[];
+
+        const mealData = storageMeal.filter((meal) => meal.id !== id);
 
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(mealData));
             

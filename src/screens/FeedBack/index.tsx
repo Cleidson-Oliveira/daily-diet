@@ -1,12 +1,17 @@
 import { Button } from "@components/Button";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Conteiner, FeedBackImage, SubTitle, Title } from "./style";
 
 type TFeedback = "positive" | "negative";
+interface RouteParams {
+    type: TFeedback
+}
 
 export function Feedback () {
 
     const navigation = useNavigation();
+    const route = useRoute();
+    const { type } = route.params as RouteParams;
 
     const handleGoBack = () => {
         navigation.navigate("home")
@@ -23,7 +28,7 @@ export function Feedback () {
         }
     }
 
-    const feedbackType: TFeedback = "positive"
+    const feedbackType: TFeedback = type
 
     return (
         <Conteiner>

@@ -1,11 +1,10 @@
-import { TouchableOpacityProps } from "react-native";
 import styled from "styled-components/native";
 
-interface Props extends TouchableOpacityProps{
-    expand?: boolean 
+interface StatusProps {
+    inDiet: boolean
 }
 
-export const Conteiner = styled.TouchableOpacity<Props>`
+export const Conteiner = styled.TouchableOpacity<StatusProps>`
     align-items: center;
     justify-content: center;
     height: 100px;
@@ -14,7 +13,7 @@ export const Conteiner = styled.TouchableOpacity<Props>`
     border-radius: 8px;
     margin-bottom: 40px;
     position: relative;
-    background-color: ${({theme}) => theme.colors.green.light};
+    background-color: ${({theme, inDiet}) => inDiet ? theme.colors.green.light : theme.colors.red.light};
 `;
 
 export const Icon = styled.TouchableOpacity`

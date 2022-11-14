@@ -1,9 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
-export const Conteiner = styled(SafeAreaView)`
+interface StatusProps {
+    inDiet: boolean
+}
+
+export const Conteiner = styled(SafeAreaView)<StatusProps>`
     flex: 1;
-    background-color: ${({theme}) => theme.colors.green.light};
+    background-color: ${({ theme, inDiet }) => inDiet ? theme.colors.green.light : theme.colors.red.light};
 `;
 
 export const Content = styled.View`
@@ -62,12 +66,12 @@ export const Tag = styled.View`
     background-color: ${({theme}) => theme.colors.gray[600]};
 `;
 
-export const StatsIndicator = styled.View`
+export const StatsIndicator = styled.View<StatusProps>`
     width: 8px;
     height: 8px;
     border-radius: 4px;
     margin-right: 12px;
-    background-color: ${({theme}) => theme.colors.green.dark};
+    background-color: ${({ theme, inDiet }) => inDiet ? theme.colors.green.dark : theme.colors.red.dark};
 `;
 
 export const TagTitle = styled.Text`

@@ -1,61 +1,89 @@
-import { useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { Header } from "@components/Header";
 import { Button } from "@components/Button";
 import { MealListItem } from "@components/MealListItem";
 import { SectionList } from "react-native";
-import { DietStats } from "@components/DietStats";
+import { DietStatus } from "@components/DietStatus";
+
+import { getAllMeals } from '@storage/Meal/getAll';
 
 import { Plus } from "phosphor-react-native";
 
 import { BodyText, Conteiner, Content, MealListTitle, NewMeal } from "./style";
 
+import { IMeal } from "@storage/MealDTO"
+import { ListEmpty } from '@components/ListEmpty';
+
+interface MealSection {
+  title: string,
+  data: IMeal[]
+}
+
 export function Home () {
 
-    const DATA = [
-        {
-          title: "09-11-2022",
-          data: [
-            {meal: "Pizza", hour: "22:30", inDiet: false},
-            {meal: "Risotto", hour: "19:00", inDiet: true},
-            {meal: "Burger", hour: "16:30", inDiet: false},
-          ]
-        },
-        {
-          title: "10-11-2022",
-          data: [
-            {meal: "French Fries", hour: "22:30", inDiet: false},
-            {meal: "Fried Shrimps", hour: "19:00", inDiet: false},
-            {meal: "Onion Rings", hour: "16:30", inDiet: false},
-          ]
-        },
-        {
-          title: "11-11-2022",
-          data: [
-            {meal: "Coke", hour: "22:30", inDiet: false},
-            {meal: "Cake", hour: "19:00", inDiet: false},
-            {meal: "Pizza", hour: "16:30", inDiet: false},
-          ]
-        },
-        {
-          title: "12-11-2022",
-          data: [
-            {meal: "Cheese Cake", hour: "22:30", inDiet: false},
-            {meal: "Ice Cream", hour: "19:00", inDiet: false},
-          ]
-        }
-    ];
-
+    const [ mealData, setMealData ] = useState<MealSection[]>([]);
+    const [ percentageOfMealsInTheDiet, setPercentageOfMealsInTheDiet ] = useState(0);
     const navigation = useNavigation();
 
     const handleGoNewMeal = () => {
       navigation.navigate("newmeal");
     }
 
+    const fetchMeals = async () => {
+      const meals = await getAllMeals()
+      return meals
+    }
+
+    const transformData = (data: IMeal[]) => {
+      const listWithDateLikeTitle = {} as {[key: string]: IMeal[]}
+      data.forEach((value) => {
+
+        return !!listWithDateLikeTitle[value.date] 
+          ? listWithDateLikeTitle[value.date].push(value) 
+          : listWithDateLikeTitle[value.date] = [value]
+      })
+
+      return Object.keys(listWithDateLikeTitle).map((key) => ({title: key, data: listWithDateLikeTitle[key]}))
+    }
+
+    const computeMealsPercentageInDiet = () => {
+      let MealAmount = 0
+      const percentageOfMealsInTheDiet = mealData.reduce((acc, cur) => {
+        let curAmount = 0
+
+        cur.data.forEach((a) => {
+          MealAmount++
+          if (a.inDiet) { curAmount++ }
+        })
+
+        return acc + curAmount
+      }, 0)
+
+      return (percentageOfMealsInTheDiet * 100 / MealAmount).toFixed(2)
+    }
+
+    useFocusEffect(useCallback(() => {
+      fetchMeals()
+      .then((data) => {
+        setMealData(transformData(data!))
+      })
+      .catch(err => console.log(err))
+    },[]))
+
+    useEffect(() => {
+      if (mealData.length > 0) {
+        const percentageOfMealsInTheDiet = computeMealsPercentageInDiet()
+
+        setPercentageOfMealsInTheDiet(+percentageOfMealsInTheDiet)
+      }
+    }, [mealData])
+
     return (
       <Conteiner>
         <Header />
-        <DietStats />
+        <DietStatus statePercentage={percentageOfMealsInTheDiet}/>
         <Content>
           <NewMeal>
             <BodyText>Refeições</BodyText>
@@ -68,11 +96,12 @@ export function Home () {
           </NewMeal>
 
           <SectionList
-            sections={DATA}
+            sections={mealData}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.meal + item.hour}
             renderItem={({item}) => <MealListItem data={item} />}
-            renderSectionHeader={({ section: { title } }) => <MealListTitle>{title}</MealListTitle>}
+            renderSectionHeader={({ section: { title }}) => <MealListTitle>{title}</MealListTitle>}
+            ListEmptyComponent={<ListEmpty content="Começe a controlar sua alimentação adicionando suas refeições!"/>}
           />
 
         </Content>

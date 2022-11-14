@@ -1,5 +1,9 @@
 import styled from "styled-components/native";
 
+interface StatusProps {
+    inDiet: boolean
+}
+
 export const Conteiner = styled.TouchableOpacity`
     flex-direction: row;
     align-items: center;
@@ -25,11 +29,11 @@ export const MealName = styled.Text`
     color: ${({ theme }) => theme.colors.gray[200]};
 `;
 
-export const Status = styled.View`
+export const Status = styled.View<StatusProps>`
     height: 14px;
     width: 14px;
     border-radius: 7px;
-    background-color: ${({ theme }) => theme.colors.red.mid};
+    background-color: ${({ theme, inDiet }) => inDiet ? theme.colors.green.mid : theme.colors.red.mid};
 `;
 
 export const Separator = styled.View`

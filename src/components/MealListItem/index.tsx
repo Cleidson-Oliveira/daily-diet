@@ -1,24 +1,26 @@
+import { useNavigation } from "@react-navigation/native";
+import { IMeal } from "@storage/MealDTO";
 import { TouchableOpacityProps } from "react-native";
 import { Conteiner, MealHour, MealName, Separator, Status } from "./style";
 
-interface Data {
-    hour: string,
-    meal: string,
-    inDiet: boolean
-}
-
 interface Props extends TouchableOpacityProps {
-    data: Data
+    data: Omit<IMeal, "date">
 }
 
 export function MealListItem ({ data, ...rest}: Props) {
 
+    const navigation = useNavigation();
+
+    const handleMealDetail = () => {
+        navigation.navigate("meal", {id: data.id!});
+    }
+
     return (
-        <Conteiner {...rest}>
+        <Conteiner {...rest} onPress={handleMealDetail}>
             <MealHour>{data.hour}</MealHour>
             <Separator />
             <MealName>{data.meal}</MealName>
-            <Status />
+            <Status inDiet={data.inDiet}/>
         </Conteiner>
     );
 }

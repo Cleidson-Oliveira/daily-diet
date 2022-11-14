@@ -3,20 +3,25 @@ import { ButtonNo, ButtonTitle, ButtonYes, Conteiner, Separator, StatIndicator, 
 interface SelectProps {
     title: string,
     active: "yes" | "no" | null,
+    changeSelectStatus(inDiet: "yes" | "no"): void
 }
 
-export function Select ({ active, title }: SelectProps) {
+export function Select ({ active, changeSelectStatus, title }: SelectProps) {
+
+    const fn =(aa: "yes" | "no") => {
+        changeSelectStatus(aa)
+    }
 
     return (
         <Conteiner>
             <Title>{title}</Title>
-            <ButtonYes active={active === "yes"}>
+            <ButtonYes active={active === "yes"} onPress={()=>fn("yes")}>
                 <StatIndicator color="green"/>
                 <Separator />
                 <ButtonTitle>Sim</ButtonTitle>
             </ButtonYes>
             <Separator />
-            <ButtonNo active={active === "no"}>
+            <ButtonNo active={active === "no"} onPress={()=>fn("no")}>
                 <StatIndicator color="red"/>
                 <Separator />
                 <ButtonTitle>Não</ButtonTitle>

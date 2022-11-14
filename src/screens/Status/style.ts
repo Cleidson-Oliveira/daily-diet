@@ -2,12 +2,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
 interface CardProps {
-    color: "red" | "green" | "gray"
+    color: "red" | "green" | "gray",
 }
 
-export const Conteiner = styled(SafeAreaView)`
+interface ConteinerProps {
+    status: "positive" | "negative",
+}
+
+export const Conteiner = styled(SafeAreaView)<ConteinerProps>`
     flex: 1;
-    background-color: ${({theme}) => theme.colors.green.light};
+    background-color: ${({theme, status}) => status === "positive" ? theme.colors.green.light : theme.colors.red.light};
 `;
 
 export const Header = styled(SafeAreaView)`
@@ -19,7 +23,6 @@ export const Header = styled(SafeAreaView)`
     border-radius: 8px;
     margin-bottom: 40px;
     position: relative;
-    background-color: ${({theme}) => theme.colors.green.light};
 `;
 
 export const HeaderTitle = styled.Text`
