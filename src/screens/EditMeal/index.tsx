@@ -3,7 +3,7 @@ import { useTheme } from "styled-components/native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { Button } from "@components/Button";
-import { Input } from "@components/Input";
+import { Input, InputDate, InputHour } from "@components/Input";
 import { Select } from "@components/Select";
 
 import { ArrowLeft, Plus } from 'phosphor-react-native';
@@ -85,14 +85,16 @@ export function EditMeal () {
                     onChangeText={setDescription}
                 />
                 <DateTime>
-                    <Input 
-                        title="Data" 
-                        autoComplete="birthdate-full"
+                    <InputDate
+                        title="Data"
+                        keyboardType="numeric"
                         value={date}
                         onChangeText={setDate}
+                        
                     />
-                    <Input 
+                    <InputHour
                         title="Hora"
+                        keyboardType="numeric"
                         value={hour}
                         onChangeText={setHour}
                     />
