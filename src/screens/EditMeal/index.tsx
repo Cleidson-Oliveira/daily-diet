@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "styled-components/native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
+import { updateMeal } from "@storage/Meal/update";
+import { getById } from "@storage/Meal/getById";
 import { Button } from "@components/Button";
 import { Input, InputDate, InputHour } from "@components/Input";
 import { Select } from "@components/Select";
-
 import { ArrowLeft, Plus } from 'phosphor-react-native';
-
 import { Conteiner, Content, DateTime, Header, Icon, Separator, Title } from "./style";
-import { updateMeal } from "@storage/Meal/update";
-import { getById } from "@storage/Meal/getById";
+import { verifyIfExistsEmptyFields } from "@utils/VerifyIfExistsEmptyFields";
+import { Alert } from "react-native";
 
 interface RouteParams {
     id: string
@@ -35,17 +34,25 @@ export function EditMeal () {
     }
 
     const handleUpdateMeal = async () => {
-        const updatedMeal = {
-            id,
-            meal: meal.trim(),
-            description: description.trim(),
-            date,
-            hour,
-            inDiet: inDiet == "yes" ? true : false 
+        try {
+            if (verifyIfExistsEmptyFields([ meal, description, date, hour ])) {
+                return Alert.alert("Atualizar refeição", "Todos os Campos devem estar preenchidos!");
+            }
+
+            await updateMeal({
+                id,
+                meal: meal.trim(),
+                description: description.trim(),
+                date,
+                hour,
+                inDiet: inDiet == "yes" ? true : false
+            });
+            
+            navigate("home");
+        } catch (error) {
+            Alert.alert("Atualizar refeição", "Não foi possível cadastrar nova refeição.");
+            console.log(error);
         }
-        await updateMeal(updatedMeal);
-        
-        navigate("home");
     }
 
     const changeInDietStatus = (inDiet: "no" | "yes") => {

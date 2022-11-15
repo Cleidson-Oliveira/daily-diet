@@ -1,19 +1,16 @@
 import { useState } from "react";
+import { Alert } from "react-native";
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
-
+import { createMeal } from "@storage/Meal/create";
 import { Button } from "@components/Button";
 import { Input, InputDate, InputHour } from "@components/Input";
 import { Select } from "@components/Select";
-
 import { ArrowLeft, Plus } from 'phosphor-react-native';
-
 import { Conteiner, Content, DateTime, Header, Icon, Separator, Title } from "./style";
-import { createMeal } from "@storage/Meal/create";
+import { verifyIfExistsEmptyFields } from "@utils/VerifyIfExistsEmptyFields";
 
-interface NewMealProps {}
-
-export function NewMeal (props: NewMealProps) {
+export function NewMeal () {
 
     const [ meal, setMeal ] = useState("");
     const [ description, setDescription ] = useState("");
@@ -21,7 +18,7 @@ export function NewMeal (props: NewMealProps) {
     const [ hour, setHour ] = useState("");
     const [ inDiet, setInDiet ] = useState<null | "no" | "yes">(null);
 
-    const { colors } = useTheme()
+    const { colors } = useTheme();
 
     const navigation = useNavigation();
 
@@ -30,16 +27,26 @@ export function NewMeal (props: NewMealProps) {
     }
 
     const handleNewMeal = async () => {
-        const newMeal = {
-            meal: meal.trim(),
-            description: description.trim(),
-            date,
-            hour,
-            inDiet: inDiet == "yes" ? true : false 
+        try {
+            if (verifyIfExistsEmptyFields([ meal, description, date, hour ])) {
+                return Alert.alert("Nova refeição", "Todos os Campos devem estar preenchidos!");
+            }
+
+            await createMeal({
+                meal: meal.trim(),
+                description: description.trim(),
+                date,
+                hour,
+                inDiet: inDiet == "yes" ? true : false 
+            });
+            
+            navigation.navigate("feedback", {type: inDiet == "yes" ? "positive" : "negative"});
+
+        } catch (error) {
+  
+            Alert.alert("Nova refeição", "Não foi possível cadastrar nova refeição.");
+            console.log(error);
         }
-        await createMeal(newMeal);
-        
-        navigation.navigate("feedback", {type: inDiet == "yes" ? "positive" : "negative"});
     }
 
     const changeInDietStatus = (inDiet: "no" | "yes") => {

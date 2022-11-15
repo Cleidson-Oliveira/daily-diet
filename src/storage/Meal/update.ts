@@ -19,6 +19,6 @@ export async function updateMeal (data: IMeal) {
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(mealDateUpdated));
             
     } catch (error) {
-        console.log(error)
+        throw error;
     }
 }

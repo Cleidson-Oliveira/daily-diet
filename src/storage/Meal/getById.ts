@@ -14,7 +14,7 @@ export async function getById (id: string) {
         return mealData.find((meal) => meal.id === id)
 
     } catch (error) {
-        console.log(error)
+        throw error;
     }
 
 }

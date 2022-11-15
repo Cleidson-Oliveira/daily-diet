@@ -12,7 +12,7 @@ export async function getAllMeals () {
         return mealData;
 
     } catch (error) {
-        console.log(error)
+        throw error;
     }
 
 }

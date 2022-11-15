@@ -19,6 +19,6 @@ export async function createMeal (data: IMeal) {
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(mealData));
             
     } catch (error) {
-        console.log(error)
+        throw error;
     }
 }
