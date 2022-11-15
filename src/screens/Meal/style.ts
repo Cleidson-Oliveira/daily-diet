@@ -84,3 +84,6 @@ export const Separator = styled.View`
     flex: 1;
 `;
 
+export const ButtonSeparator = styled.View`
+    width: 10px;
+`;

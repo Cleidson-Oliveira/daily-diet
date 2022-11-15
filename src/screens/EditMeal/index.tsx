@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { useTheme } from "styled-components/native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { updateMeal } from "@storage/Meal/update";
@@ -9,7 +10,6 @@ import { Select } from "@components/Select";
 import { ArrowLeft, Plus } from 'phosphor-react-native';
 import { Conteiner, Content, DateTime, Header, Icon, Separator, Title } from "./style";
 import { verifyIfExistsEmptyFields } from "@utils/VerifyIfExistsEmptyFields";
-import { Alert } from "react-native";
 
 interface RouteParams {
     id: string

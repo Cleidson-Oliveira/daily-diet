@@ -1,8 +1,9 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Button } from "@components/Button";
+import { CustomModal as Modal } from "@components/Modal";
 import { ArrowLeft } from "phosphor-react-native";
 import { useTheme } from "styled-components/native";
-import { Conteiner, Content, Header, Icon, Separator, StatsIndicator, SubTitle, Tag, TagTitle, TextDescription, Title } from "./style";
+import { ButtonSeparator, Conteiner, Content, Header, Icon, Separator, StatsIndicator, SubTitle, Tag, TagTitle, TextDescription, Title } from "./style";
 import { PencilSimple, Trash } from 'phosphor-react-native';
 import { useEffect, useState } from "react";
 import { getById } from "@storage/Meal/getById";
@@ -15,13 +16,14 @@ interface RouteParams {
 
 export function Meal () {
 
+    const [ modalVisible, setModalVisible ] = useState(false);
     const [ meal, setMeal ] = useState<IMeal>({} as IMeal);
     const navigation = useNavigation();
     const route = useRoute();
     const { colors } = useTheme();
-
+    
     const { id } = route.params as RouteParams;
-
+    
     const handleBack = () => {
         navigation.navigate("home");
     }
@@ -41,7 +43,7 @@ export function Meal () {
         .catch(err => console.log(err))
     }, [])
 
-    return (
+    return (        
         <Conteiner inDiet={meal.inDiet}>
             <Header>
                 <Icon onPress={handleBack}>
@@ -71,11 +73,23 @@ export function Meal () {
                     <Button 
                         buttonTitle="Remover Refeição" 
                         secondary
-                        onPress={HandleDelete}
+                        onPress={() => setModalVisible(!modalVisible)}
                     >
                         <Trash color={colors.gray[100]} size={18} />
                     </Button>
             </Content>
+
+            <Modal 
+                isVisible={modalVisible}
+                title="Deseja realmente excluir o registro da refeição?"
+                onClose={() => setModalVisible(!modalVisible)}
+            >
+                <>
+                    <Button onPress={() => setModalVisible(!modalVisible)} buttonTitle="Cancelar" secondary />
+                    <ButtonSeparator />
+                    <Button onPress={HandleDelete} buttonTitle="Sim, exluir" />
+                </>
+            </Modal>
         </Conteiner>
     )
 }
